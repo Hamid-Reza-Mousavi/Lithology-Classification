@@ -33,7 +33,7 @@ y_pred:list
     """
     
     import numpy as np
-    matrix_path = 'penalty_matrix.npy'
+    matrix_path = '/content/gdrive/My Drive/Colab Notebooks/penalty_matrix.npy'
     A = np.load(matrix_path)
     S = 0.0
     y_true = y_true.astype(int)
