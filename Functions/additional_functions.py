@@ -77,11 +77,11 @@ le
     l3 = np.array([value for value in list(l2) if not value in list(l1)] + [value for value in list(l1) if not value in list(l2)], dtype='O')
     c1 = l1
     c2 = l2 
-    c3 = np.unique(np.concatenate([l1, l2, l3]))
+    class_names = np.unique(np.concatenate([l1, l2, l3]))
     fig, ax = plot_confusion_matrix(conf_mat=cm,
                                     colorbar=False,
                                     show_absolute=False,
                                     show_normed=True,
-                                    class_names=c3,
+                                    class_names=class_names,
                                     figsize=(8, 8))
     plt.show()
