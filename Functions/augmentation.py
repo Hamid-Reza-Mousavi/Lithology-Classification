@@ -54,7 +54,7 @@ def data_augmentation(traindata, testdata, hiddendata):
                              tree_method='gpu_hist',
                              learning_rate=0.05), 
                 
-                CatBoostRegressor(task_type='GPU', cat_features=[]),
+                CatBoostRegressor(task_type='GPU'),
                 
                 LGBMRegressor(device='gpu',
                               gpu_platform_id=1,
