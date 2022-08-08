@@ -70,7 +70,7 @@ def preprocess_data(training_formated, test_formated, hidden_formated):
   well_names_df = pd.DataFrame({'WELL':well_names})
 
   # importing wells metadata
-  well_meta_df = pd.read_csv('wellbore_exploration_all.csv')
+  well_meta_df = pd.read_csv('/content/gdrive/My Drive/Colab Notebooks/wellbore_exploration_all.csv')
   well_meta_df.rename(columns={'wlbWellboreName': 'WELL', 
                                'wlbWell': 'WELL_HEAD', 
                                'wlbNsDecDeg': 'lat', 
