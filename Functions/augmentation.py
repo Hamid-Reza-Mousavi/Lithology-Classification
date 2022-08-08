@@ -63,7 +63,8 @@ def data_augmentation(traindata, testdata, hiddendata):
                 
   estimator_names = ['EXTREME BOOST REGRESSOR',
                      #'CATBOOST REGRESSOR',
-                     #'LIGHTBOOST REGRESSOR'] # regressors names
+                     #'LIGHTBOOST REGRESSOR'
+                    ] # regressors names
 
   # predicting DTS
   print('-----------------------------------------PREDINCTING DTS------------------------------------------')
