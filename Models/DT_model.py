@@ -7,7 +7,7 @@ The function returns the lithofacies predictions obtained for the training,
 open test, and hidden test sets.
 """
 
-def run_DT(train_norm, test_norm, hidden_norm):
+def run_DT(train_scaled, test_scaled, hidden_scaled):
     
   """Returns the predicted lithology classes for the training,
   open test, and hidden test obtained by a decision tree.
@@ -33,15 +33,14 @@ def run_DT(train_norm, test_norm, hidden_norm):
 
   from sklearn.model_selection import train_test_split
   from sklearn.tree import DecisionTreeClassifier
+  x_train = train_scaled.drop(['LITHO'], axis=1)
+  y_train = train_scaled['LITHO']
 
-  x_train = train_norm.drop(['LITHO'], axis=1)
-  y_train = train_norm['LITHO']
+  x_test = test_scaled.drop(['LITHO'], axis=1)
+  y_test = test_scaled['LITHO']
 
-  x_test = test_norm.drop(['LITHO'], axis=1)
-  y_test = test_norm['LITHO']
-
-  x_hidden = hidden_norm.drop(['LITHO'], axis=1)
-  y_hidden = hidden_norm['LITHO']
+  x_hidden = hidden_scaled.drop(['LITHO'], axis=1)
+  y_hidden = hidden_scaled['LITHO']
   
   x_train_strat, X2, y_train_strat, Y2 = train_test_split(x_train,
                                                           y_train,
