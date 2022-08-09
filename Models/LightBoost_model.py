@@ -69,7 +69,7 @@ def run_LightBoost(train_scaled, test_scaled, hidden_scaled):
   # fitting the LBGM model
   lightboost_model1.fit(x_train,
                         y_train.values.ravel(),
-                        early_stopping_rounds=100,
+                        #early_stopping_rounds=100,
                         eval_set=[(x_test, y_test)],
                         verbose=-100
                         )
