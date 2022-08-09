@@ -6,7 +6,7 @@ on the clean open test and hidden test datasets. The function returns the
 lithofacies predictions obtained for the training, open test, and hidden test sets.
 """
 
-def run_NN(train_norm, test_norm, hidden_norm):
+def run_NN(train_scaled, test_scaled, hidden_scaled):
             
   """Returns the predicted lithology classes for the training,
   open test, and hidden test obtained by a bayesian optimized
@@ -61,9 +61,9 @@ def run_NN(train_norm, test_norm, hidden_norm):
   """Structuring a two-hidden layer feed fordward neural network
   """
   
-  x_train_nn = tf.convert_to_tensor(train_norm[features_selected_nn])
-  x_test_nn = tf.convert_to_tensor(test_norm[features_selected_nn])
-  x_hidden_nn = tf.convert_to_tensor(hidden_norm[features_selected_nn])
+  x_train_nn = tf.convert_to_tensor(train_scaled[features_selected_nn])
+  x_test_nn = tf.convert_to_tensor(test_scaled[features_selected_nn])
+  x_hidden_nn = tf.convert_to_tensor(hidden_scaled[features_selected_nn])
 
   opt_model = Sequential()
   opt_model.add(InputLayer(input_shape=(x_train_nn.shape[1])))
