@@ -54,16 +54,16 @@ def data_augmentation(traindata, testdata, hiddendata):
                              tree_method='gpu_hist',
                              learning_rate=0.05), 
                 
-                #CatBoostRegressor(task_type='GPU'),
+                CatBoostRegressor(task_type='GPU'),
                 
-                #LGBMRegressor(device='gpu',
-                #             gpu_platform_id=1,
-                #             gpu_device_id=0), 
+                LGBMRegressor(device='gpu',
+                             gpu_platform_id=1,
+                             gpu_device_id=0), 
                 ]
                 
   estimator_names = ['EXTREME BOOST REGRESSOR',
-                     #'CATBOOST REGRESSOR',
-                     #'LIGHTBOOST REGRESSOR'
+                     'CATBOOST REGRESSOR',
+                     'LIGHTBOOST REGRESSOR'
                     ] # regressors names
 
   # predicting DTS
