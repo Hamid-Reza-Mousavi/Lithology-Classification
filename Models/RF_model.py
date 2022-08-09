@@ -7,7 +7,7 @@ The function returns the lithofacies predictions obtained for the training,
 open test, and hidden test sets.
 """
 
-def run_RF(train_norm, test_norm, hidden_norm):
+def run_RF(train_scaled, test_scaled, hidden_scaled):
       
   """Returns the predicted lithology classes for the training,
   open test, and hidden test obtained by a random forest.
@@ -40,14 +40,14 @@ def run_RF(train_norm, test_norm, hidden_norm):
                         'WELL_encoded', 'FORMATION_encoded', 'DEPTH_MD', 'Z_LOC', 'CALI',
                         'X_LOC', 'RMED', 'PEF', 'SP', 'MD_TVD', 'ROP', 'DRHO']
 
-  x_train = train_norm[features_selected_rf]
-  y_train = train_norm['LITHO']
+  x_train = train_scaled[features_selected_rf]
+  y_train = train_scaled['LITHO']
 
-  x_test = test_norm[features_selected_rf]
-  y_test = test_norm['LITHO']
+  x_test = test_scaled[features_selected_rf]
+  y_test = test_scaled['LITHO']
 
-  x_hidden = hidden_norm[features_selected_rf]
-  y_hidden = hidden_norm['LITHO']
+  x_hidden = hidden_scaled[features_selected_rf]
+  y_hidden = hidden_scaled['LITHO']
 
   x_train_strat, X2, y_train_strat, Y2 = train_test_split(x_train,
                                                           y_train,
