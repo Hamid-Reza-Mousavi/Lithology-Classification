@@ -7,7 +7,7 @@ test datasets. The function returns the lithofacies predictions obtained for
 the training, open test, and hidden test sets.
 """
 
-def run_XGB(train_norm, test_norm, hidden_norm):
+def run_XGB(train_scaled, test_scaled, hidden_scaled):
           
   """Returns the predicted lithology classes for the training,
   open test, and hidden test obtained by a extreme gradient boosting
@@ -44,14 +44,14 @@ def run_XGB(train_norm, test_norm, hidden_norm):
                           'WELL_encoded', 'FORMATION_encoded', 'DEPTH_MD', 'Z_LOC', 'CALI', 'BS',
                           'X_LOC', 'RMED', 'PEF', 'SP', 'MD_TVD', 'RMIC', 'DRHO']
 
-  x_train = train_norm[selected_fetures_xgb]
-  y_train = train_norm['LITHO']
+  x_train = train_scaled[selected_fetures_xgb]
+  y_train = train_scaled['LITHO']
 
-  x_test = test_norm[selected_fetures_xgb]
-  y_test = test_norm['LITHO']
+  x_test = test_scaled[selected_fetures_xgb]
+  y_test = test_scaled['LITHO']
 
-  x_hidden = hidden_norm[selected_fetures_xgb]
-  y_hidden = hidden_norm['LITHO']
+  x_hidden = hidden_scaled[selected_fetures_xgb]
+  y_hidden = hidden_scaled['LITHO']
 
   """The model is trained on 10 stratified k-folds, also uses the open set as 
   validation set to avoid overfitting and a 100-round early stopping callback.
