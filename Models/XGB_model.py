@@ -90,9 +90,9 @@ def run_XGB(train_scaled, test_scaled, hidden_scaled):
                        )
     
     prediction = xgbmodel_noarg.predict(X_test)
-    print(f'Default score: {matrix_score(Y_test.values, prediction.values)}')
+    print(f'Default score: {matrix_score(Y_test, prediction)}')
     print('Fold accuracy:', accuracy_score(Y_test, prediction))
-    print(f'F1 is: {f1_score(prediction.values, Y_test.values, average="weighted")}')
+    print(f'F1 is: {f1_score(prediction, Y_test, average="weighted")}')
 
     print(f'-----------------------FOLD {i}---------------------')
     
