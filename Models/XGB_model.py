@@ -36,7 +36,8 @@ def run_XGB(train_scaled, test_scaled, hidden_scaled):
   from sklearn.model_selection import StratifiedKFold
   import numpy as np
   import pandas as pd
-  from sklearn.metrics import accuracy_score
+  from sklearn.metrics import accuracy_score, f1_score
+  from Package.Functions.additional_functions import matrix_score
  
   # selected features to be used while training
   selected_fetures_xgb = ['RDEP', 'GR', 'NPHI_COMB', 'G', 'P_I', 'DTC', 'DTS_COMB', 'RSHA',
@@ -89,7 +90,9 @@ def run_XGB(train_scaled, test_scaled, hidden_scaled):
                        )
     
     prediction = xgbmodel_noarg.predict(X_test)
+    print(f'Default score: {matrix_score(Y_test.values, prediction.values)}')
     print('Fold accuracy:', accuracy_score(Y_test, prediction))
+    rint(f'F1 is: {f1_score(prediction.values, Y_test.values, average="weighted")}')
 
     print(f'-----------------------FOLD {i}---------------------')
     
