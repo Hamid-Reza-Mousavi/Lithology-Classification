@@ -2,7 +2,7 @@
 """Additional functions
 
 This script holds the 
-1- matrix_score 
+1- Penalty_score 
 2- classification report (clf_rep)
 3- plot confusion matrix (cm_plot)
 for evaluation the classification performance.
