@@ -1,5 +1,5 @@
 
-"""Categorical gradient boosting tree-based machine-learning model
+"""Categorical Gradient Boosting tree-based machine-learning model
 
 This script receives the clean datasets and trains a categorical tree gradient
 boosting machine learning model and test it on the clean open test and hidden
