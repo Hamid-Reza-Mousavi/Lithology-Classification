@@ -68,4 +68,4 @@ def run_LR(train_scaled, test_scaled, hidden_scaled):
   test_pred_lr = model_lr.predict(x_test[features_selected_lr])
   hidden_pred_lr = model_lr.predict(x_hidden[features_selected_lr])
 
-  return train_pred_lr, test_pred_lr, hidden_pred_lr
+  return train_pred_lr, test_pred_lr, hidden_pred_lr, model_lr
