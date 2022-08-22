@@ -1,7 +1,7 @@
  
 __all__ = ['additional_functions',
            'augmentation',
-           'data_formating',
+           'formating',
            'imputer',
            'plotting',
            'preprocessing',

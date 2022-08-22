@@ -1,5 +1,5 @@
 import pandas as pd
-def formating(
+def formating_data(
   training_raw:pd.DataFrame,
   test_raw:pd.DataFrame, 
   hidden_raw:pd.DataFrame
