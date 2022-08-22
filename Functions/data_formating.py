@@ -51,9 +51,9 @@ def formating(
                                            ['SS', 'Sh', 'SS-Sh', 'Lims', 'Chlk', 'Dol', 'Marl', 'Anhy', 'Hal', 'Coal', 'Bsmt', 'Tuf'], inplace=True)
   hidden_formated = hidden_formated.drop(['FORCE_2020_LITHOFACIES_CONFIDENCE'], axis=1)
   hidden_formated['LITHO'] = le.transform(hidden_formated["LITHO"])
-  print('For traing|test|hidden dataset column rename from FORCE_2020_LITHOFACIES_LITHOLOGY to LITHO and label encoding process is done for lithology labels.')
-  print('Column FORCE_2020_LITHOFACIES_CONFIDENCE removed.')
-  print('Label encoding process is done for lithology labels.')
+  print('1- For traing|test|hidden dataset column rename from FORCE_2020_LITHOFACIES_LITHOLOGY to LITHO')
+  print('2- Column FORCE_2020_LITHOFACIES_CONFIDENCE removed.')
+  print('3- Label encoding process is done for lithology column.')
   print('Shape of datasets after formating >>> train: {} | test: {} | hidden: {}'.format(training_formated.shape, test_formated.shape, hidden_formated.shape))
 
   return(training_formated, test_formated, hidden_formated, le)
