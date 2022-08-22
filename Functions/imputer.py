@@ -564,6 +564,4 @@ def regression_imputer(traindata, testdata, hiddendata):
   hiddendata['DTC_COMB'] = hiddendata['DTC']
   hiddendata['DTC_COMB'].fillna(hiddendata['DTC_pred'], inplace=True)
   
-  print('After imputation number of Nan data is >>> tarin {} | test{} | hidden{}'. format(traindata.isna().sum().sum(), testdata.isna().sum().sum(), hiddendata.isna().sum().sum()))
-
   return traindata, testdata, hiddendata
