@@ -118,5 +118,6 @@ def preprocess_data(training_formated, test_formated, hidden_formated):
   traindata_prep = df_drop2[:train_len].copy()
   testdata_prep = df_drop2[train_len:(train_len+test_len)].copy()
   hiddendata_prep = df_drop2[(train_len+test_len):].copy()
+  print('Shape of datasets after preprocessing >>> train: {} | test: {} | hidden: {}'.format(traindata_prep.shape, testdata_prep.shape, hiddendata_prep.shape))
 
   return traindata_prep, testdata_prep, hiddendata_prep
