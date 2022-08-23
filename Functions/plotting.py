@@ -10,147 +10,128 @@ some require libraries: pandas, numpy, matplotlib
 """
 #PLOTTING logs in specific depth
 import pandas as pd
-def show_log_in_range_depth(
-  logs:pd.DataFrame,
-  well_num:int,
-  top_depth:int,
-  bottom_depth:int
-  ):
-  """Plots the raw logs contained in the original datasets after they have been formated.
-  For Plots logs in specific depth.
-
-  Parameters
-  ----------
-  logs: Dataframe
-    The raw logs once the headers and necessary columns have been formated and fixed.
-  well_num: int
-    The number of the well to be plotted. raw_logs internally defines a list of weells 
-    contained by the dataset, each of them could be called by its list index.
-  top_depth: int
-  bottom_depth: int
-
-  Returns
-  ----------
-  plot:
-    Different tracks having one well log in top and bot depth range 
+def triple_combo(logs, well_num, column_depth, column_GR, column_resistivity, 
+                 column_NPHI, column_RHOB, min_depth, max_depth, 
+                 min_GR=0, max_GR=150, sand_GR_line=60,
+                 min_resistivity=0.01, max_resistivity=1000, 
+                 color_GR='black', color_resistivity='green', 
+                 color_RHOB='red', color_NPHI='blue',
+                 figsize=(6,10), tight_layout=1, 
+                 title_size=15, title_height=1.05):
   """
-  from matplotlib import pyplot as plt
+  Producing Triple Combo log
+
+  Input:
+
+  df is your dataframe
+  column_depth, column_GR, column_resistivity, column_NPHI, column_RHOB
+  are column names that appear in your dataframe (originally from the LAS file)
+
+  specify your depth limits; min_depth and max_depth
+
+  input variables other than above are default. You can specify
+  the values yourselves. 
+
+  Output:
+
+  Fill colors; gold (sand), lime green (non-sand), blue (water-zone), orange (HC-zone)
+  """
+  
+  import matplotlib.pyplot as plt
+  from matplotlib.ticker import AutoMinorLocator  
   wells = logs['WELL'].unique() # creating a wells list
   logs = logs[logs['WELL'] == wells[well_num]] # selecting well by index number
   logs = logs.sort_values(by='DEPTH_MD') # sorting well log by depth
-  fig, ax = plt.subplots(figsize=(15,10))
-  fig.patch.set_facecolor('white')
-  #Set up the plot axes
-  ax1 = plt.subplot2grid((1,6), (0,0), rowspan=1, colspan = 1)
-  ax2 = plt.subplot2grid((1,6), (0,1), rowspan=1, colspan = 1, sharey = ax1)
-  ax3 = plt.subplot2grid((1,6), (0,2), rowspan=1, colspan = 1, sharey = ax1)
-  ax4 = plt.subplot2grid((1,6), (0,3), rowspan=1, colspan = 1, sharey = ax1)
-  ax5 = ax3.twiny() #Twins the y-axis for the density track with the neutron track
-  ax6 = plt.subplot2grid((1,6), (0,4), rowspan=1, colspan = 1, sharey = ax1)
-  ax7 = ax2.twiny()
-  
-  # As our curve scales will be detached from the top of the track,
-  # this code adds the top border back in without dealing with splines
-  ax10 = ax1.twiny()
-  ax10.xaxis.set_visible(False)
-  ax11 = ax2.twiny()
-  ax11.xaxis.set_visible(False)
-  ax12 = ax3.twiny()
-  ax12.xaxis.set_visible(False)
-  ax13 = ax4.twiny()
-  ax13.xaxis.set_visible(False)
-  ax14 = ax6.twiny()
-  ax14.xaxis.set_visible(False)
-  
-  # Gamma Ray track
-  ax1.plot(logs["GR"], logs.DEPTH_MD, color = "green", linewidth = 0.5)
-  ax1.set_xlabel("Gamma")
-  ax1.xaxis.label.set_color("green")
-  ax1.set_xlim(0, 200)
-  ax1.set_ylabel("Depth (m)")
-  ax1.tick_params(axis='x', colors="green")
-  ax1.spines["top"].set_edgecolor("green")
-  ax1.title.set_color('green')
-  ax1.set_xticks([0, 50, 100, 150, 200])
-  
-  # Resistivity track
-  ax2.plot(logs["RDEP"], logs.DEPTH_MD, color = "red", linewidth = 0.5)
-  ax2.set_xlabel("Resistivity - Deep")
-  ax2.set_xlim(0.2, 2000)
-  ax2.xaxis.label.set_color("red")
-  ax2.tick_params(axis='x', colors="red")
-  ax2.spines["top"].set_edgecolor("red")
-  ax2.set_xticks([0.1, 1, 10, 100, 1000])
-  ax2.semilogx()
-  
-  # Density track
-  ax3.plot(logs["RHOB"], logs.DEPTH_MD, color = "red", linewidth = 0.5)
-  ax3.set_xlabel("Density")
-  ax3.set_xlim(1.95, 2.95)
-  ax3.xaxis.label.set_color("red")
-  ax3.tick_params(axis='x', colors="red")
-  ax3.spines["top"].set_edgecolor("red")
-  ax3.set_xticks([1.95, 2.45, 2.95])
-  
-  # Sonic track
-  ax4.plot(logs["DTC"], logs.DEPTH_MD, color = "purple", linewidth = 0.5)
-  ax4.set_xlabel("Sonic-DTC")
-  ax4.set_xlim(140, 40)
-  ax4.xaxis.label.set_color("purple")
-  ax4.tick_params(axis='x', colors="purple")
-  ax4.spines["top"].set_edgecolor("purple")
-  
-  # Neutron track placed ontop of density track
-  ax5.plot(logs["NPHI"], logs.DEPTH_MD, color = "blue", linewidth = 0.5)
-  ax5.set_xlabel('Neutron')
-  ax5.xaxis.label.set_color("blue")
-  ax5.set_xlim(45, -15)
-  ax5.set_ylim(4150, 3500)
-  ax5.tick_params(axis='x', colors="blue")
-  ax5.spines["top"].set_position(("axes", 1.08))
-  ax5.spines["top"].set_visible(True)
-  ax5.spines["top"].set_edgecolor("blue")
-  ax5.set_xticks([45,  15, -15])
-  
-  # Caliper track
-  ax6.plot(logs["CALI"], logs.DEPTH_MD, color = "black", linewidth = 0.5)
-  ax6.set_xlabel("Caliper")
-  ax6.set_xlim(6, 16)
-  ax6.xaxis.label.set_color("black")
-  ax6.tick_params(axis='x', colors="black")
-  ax6.spines["top"].set_edgecolor("black")
-  ax6.set_xticks([6,  11, 16])
-  
-  # Resistivity track - Curve 2
-  ax7.plot(logs["RMED"], logs.DEPTH_MD, color = "green", linewidth = 0.5)
-  ax7.set_xlabel("Resistivity - Med")
-  ax7.set_xlim(0.2, 2000)
-  ax7.xaxis.label.set_color("green")
-  ax7.spines["top"].set_position(("axes", 1.08))
-  ax7.spines["top"].set_visible(True)
-  ax7.tick_params(axis='x', colors="green")
-  ax7.spines["top"].set_edgecolor("green")
-  ax7.set_xticks([0.1, 1, 10, 100, 1000])
-  ax7.semilogx()
-  
-  
-  # Common functions for setting up the plot can be extracted into
-  # a for loop. This saves repeating code.
-  for ax in [ax1, ax2, ax3, ax4, ax6]:
-      ax.set_ylim(bottom_depth, top_depth)
-      ax.grid(which='major', color='lightgrey', linestyle='-')
-      ax.xaxis.set_ticks_position("top")
-      ax.xaxis.set_label_position("top")
-      ax.spines["top"].set_position(("axes", 1.02))
-      
-      
-  for ax in [ax2, ax3, ax4, ax6]:
-      plt.setp(ax.get_yticklabels(), visible = False)
-      
-  plt.tight_layout()
-  fig.subplots_adjust(wspace = 0.15)
-  fig.suptitle('Well Logs '+str(wells[well_num]), fontsize=16,y=1.03)
-#PLOTTING log + litology
+  fig, ax=plt.subplots(1,3,figsize=(8,10))
+  fig.suptitle('Well Logs '+str(wells[well_num]), fontsize=16,y=0.97)
+
+  ax[0].minorticks_on()
+  ax[0].grid(which='major', linestyle='-', linewidth='0.5', color='lime')
+  ax[0].grid(which='minor', linestyle=':', linewidth='1', color='black')
+
+  ax[1].minorticks_on()
+  ax[1].grid(which='major', linestyle='-', linewidth='0.5', color='lime')
+  ax[1].grid(which='minor', linestyle=':', linewidth='1', color='black')
+
+  ax[2].minorticks_on()
+  ax[2].grid(which='major', linestyle='-', linewidth='0.5', color='lime')
+  ax[2].grid(which='minor', linestyle=':', linewidth='1', color='black')  
+
+  # First track: GR
+  ax[0].get_xaxis().set_visible(False)
+  ax[0].invert_yaxis()   
+
+  gr=ax[0].twiny()
+  gr.set_xlim(min_GR,max_GR)
+  gr.set_xlabel('GR',color=color_GR)
+  gr.set_ylim(max_depth, min_depth)
+  gr.spines['top'].set_position(('outward',10))
+  gr.tick_params(axis='x',colors=color_GR)
+  gr.plot(logs[column_GR], logs[column_depth], color=color_GR)  
+
+  gr.minorticks_on()
+  gr.xaxis.grid(which='major', linestyle='-', linewidth='0.5', color='lime')
+  gr.xaxis.grid(which='minor', linestyle=':', linewidth='1', color='black') 
+
+  gr.fill_betweenx(logs[column_depth], sand_GR_line, logs[column_GR], where=(sand_GR_line>=logs[column_GR]), color = 'gold', linewidth=0) # sand
+  gr.fill_betweenx(logs[column_depth], sand_GR_line, logs[column_GR], where=(sand_GR_line<logs[column_GR]), color = 'lime', linewidth=0) # shale
+
+  # Second track: Resistivity
+  ax[1].get_xaxis().set_visible(False)
+  ax[1].invert_yaxis()   
+
+  res=ax[1].twiny()
+  res.set_xlim(min_resistivity,max_resistivity)
+  res.set_xlabel('Resistivity',color=color_resistivity)
+  res.set_ylim(max_depth, min_depth)
+  res.spines['top'].set_position(('outward',10))
+  res.tick_params(axis='x',colors=color_resistivity)
+  res.semilogx(logs[column_resistivity], logs[column_depth], color=color_resistivity)    
+
+  res.minorticks_on()
+  res.xaxis.grid(which='major', linestyle='-', linewidth='0.5', color='lime')
+  res.xaxis.grid(which='minor', linestyle=':', linewidth='1', color='black')   
+
+  # Third track: NPHI and RHOB
+  ax[2].get_xaxis().set_visible(False)
+  ax[2].invert_yaxis()  
+
+  ## NPHI curve 
+  nphi=ax[2].twiny()
+  nphi.set_xlim(-0.15,0.45)
+  nphi.invert_xaxis()
+  nphi.set_xlabel('NPHI',color='blue')
+  nphi.set_ylim(max_depth, min_depth)
+  nphi.spines['top'].set_position(('outward',10))
+  nphi.tick_params(axis='x',colors='blue')
+  nphi.plot(logs[column_NPHI], logs[column_depth], color=color_NPHI)
+
+  nphi.minorticks_on()
+  nphi.xaxis.grid(which='major', linestyle='-', linewidth='0.5', color='lime')
+  nphi.xaxis.grid(which='minor', linestyle=':', linewidth='1', color='black')     
+
+  ## RHOB curve 
+  rhob=ax[2].twiny()
+  rhob.set_xlim(1.95,2.95)
+  rhob.set_xlabel('RHOB',color='red')
+  rhob.set_ylim(max_depth, min_depth)
+  rhob.spines['top'].set_position(('outward',50))
+  rhob.tick_params(axis='x',colors='red')
+  rhob.plot(logs[column_RHOB], logs[column_depth], color=color_RHOB)
+
+  # solution to produce fill between can be found here:
+  # https://stackoverflow.com/questions/57766457/how-to-plot-fill-betweenx-to-fill-the-area-between-y1-and-y2-with-different-scal
+  x2p, _ = (rhob.transData + nphi.transData.inverted()).transform(np.c_[logs[column_RHOB], logs[column_depth]]).T
+  nphi.autoscale(False)
+  nphi.fill_betweenx(logs[column_depth], logs[column_NPHI], x2p, color="orange", alpha=0.4, where=(x2p > logs[column_NPHI])) # hydrocarbon
+  nphi.fill_betweenx(logs[column_depth], logs[column_NPHI], x2p, color="blue", alpha=0.4, where=(x2p < logs[column_NPHI])) # water
+
+  res.minorticks_on()
+  res.grid(which='major', linestyle='-', linewidth='0.5', color='lime')
+  res.grid(which='minor', linestyle=':', linewidth='1', color='black')
+
+  plt.tight_layout(tight_layout)  
+  plt.show()
 
 def show_log(
   logs:pd.DataFrame,
