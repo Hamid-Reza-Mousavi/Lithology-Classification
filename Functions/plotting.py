@@ -53,11 +53,12 @@ def triple_combo(logs, well_num, column_depth, column_GR, column_resistivity,
   ax[1].minorticks_on()
   ax[1].grid(which='major', linestyle='-', linewidth='0.5', color='lime')
   ax[1].grid(which='minor', linestyle=':', linewidth='1', color='black')
+  ax[1].set_yticklabels([])
 
   ax[2].minorticks_on()
   ax[2].grid(which='major', linestyle='-', linewidth='0.5', color='lime')
   ax[2].grid(which='minor', linestyle=':', linewidth='1', color='black')  
-
+  ax[2].set_yticklabels([])
   # First track: GR
   ax[0].get_xaxis().set_visible(False)
   ax[0].invert_yaxis()   
