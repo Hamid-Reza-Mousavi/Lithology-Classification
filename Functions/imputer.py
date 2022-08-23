@@ -1,5 +1,5 @@
 
-"""Data imputer
+"""Data imputer (regression | mode,median,constant,... | timeseries)
 
 This script test three diffrent machine learning regressors in order
 to predict the four most relevant wireline logs,DTC, NPHI, DTS, and RHOB.
