@@ -103,9 +103,9 @@ def run_NN(train_scaled, test_scaled, hidden_scaled):
   """
 
   histories = opt_model.fit(x_train_nn, 
-                            train_norm['LITHO'],
+                            train_scaled['LITHO'],
                             batch_size = 256,
-                            validation_data = (x_test_nn, test_norm['LITHO']),
+                            validation_data = (x_test_nn, test_scaled['LITHO']),
                             callbacks = [monitor],
                             verbose=1,
                             epochs=100
