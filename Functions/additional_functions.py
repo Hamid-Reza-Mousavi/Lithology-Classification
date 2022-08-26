@@ -91,7 +91,7 @@ def error_plot(y_true, y_pred, le):
   import numpy as np
   import pandas as pd
   from matplotlib.pyplot import figure
-
+  from sklearn.metrics import confusion_matrix
   d = le.classes_
   l1 = le.inverse_transform(np.unique(y_true, return_counts=True)[0].astype(int))
   l2 = le.inverse_transform(np.unique(y_pred, return_counts=True)[0].astype(int))
