@@ -91,81 +91,30 @@ def error_plot(y_true, y_pred, le):
   import numpy as np
   import pandas as pd
   from matplotlib.pyplot import figure
-  df = pd.concat([pd.Series(y_true), pd.Series(y_pred)], axis=1)
-  class_0 = [0 for i in range(12)]; class_1 = [0 for i in range(12)]; class_2 = [0 for i in range(12)]; class_3 = [0 for i in range(12)];
-  class_4 = [0 for i in range(12)]; class_5 = [0 for i in range(12)]; class_6 = [0 for i in range(12)]; class_7 = [0 for i in range(12)];
-  class_8 = [0 for i in range(12)]; class_9 = [0 for i in range(12)]; class_10 = [0 for i in range(12)]; class_11 = [0 for i in range(12)]
 
+  d = le.classes_
+  l1 = le.inverse_transform(np.unique(y_true, return_counts=True)[0].astype(int))
+  l2 = le.inverse_transform(np.unique(y_pred, return_counts=True)[0].astype(int))
+  l3 = np.array([value for value in list(l2) if not value in list(l1)] + [value for value in list(l1) if not value in list(l2)], dtype='O')
+  class_names = np.unique(np.concatenate([l1, l2, l3]))
+  e = np.array([value for value in list(d) if not value in list(class_names)] + [value for value in list(class_names) if not value in list(d)], dtype='O')
+  e_num = le.transform(e)
 
-  for n in range(len([df[df[0]==i][1].value_counts() for i in sorted(df[0].unique())])):
-    indexs = sorted([df[df[0]==i][1].value_counts() for i in sorted(df[0].unique())][n].index)
-    for f in indexs:
-      value = [df[df[0]==i][1].value_counts() for i in sorted(df[0].unique())][n].loc[f]
-      if f == 0:
-        class_0[n] = value / df.shape[0] * 100
-      if f == 1:
-        class_1[n] = value / df.shape[0] * 100
-      if f == 2:
-        class_2[n] = value / df.shape[0] * 100
-      if f == 3:
-        class_3[n] = value / df.shape[0] * 100
-      if f == 4:
-        class_4[n] = value / df.shape[0] * 100
-      if f == 5:
-        class_5[n] = value / df.shape[0] * 100
-      if f == 6:
-        class_6[n] = value / df.shape[0] * 100
-      if f == 7:
-        class_7[n] = value / df.shape[0] * 100
-      if f == 8:
-        class_8[n] = value / df.shape[0] * 100
-      if f == 9:
-        class_9[n] = value / df.shape[0] * 100
-      if f == 10:
-        class_10[n] = value / df.shape[0] * 100
-      if f == 11:
-        class_11[n] = value / df.shape[0] * 100
-  class_num = [class_0, class_1, class_2, class_3, class_4, class_5, class_6, class_7, class_8, class_9, class_10, class_11]
-  aa = [class_0[i]+class_1[i]+class_2[i]+class_3[i]+class_4[i]+class_5[i]+class_6[i]+class_7[i]+class_8[i]+class_9[i]+class_10[i]+class_11[i] for i in range(12)]
-  for i, w in enumerate(aa):
-    if w == 0:
-      g=[]
-      g.append(i)
-
-  d = ['Anhy', 'Bsmt', 'Chlk', 'Coal', 'Dol', 'Hal', 'Lims', 'Marl', 'SS',
-         'SS-Sh', 'Sh', 'Tuf']
-  l1 = le.inverse_transform(np.unique(df[0], return_counts=True)[0].astype(int))
-  l2 = le.inverse_transform(np.unique(df[1], return_counts=True)[0].astype(int))
-  d_new = list(set(np.array([value for value in list(l1) if not value in g] + [value for value in list(l2) if not value in g])))
-  c_index = le.transform(d_new)
-  class_num_new = [v for v in class_num if sum(v)!=0]
-  t1 = np.array(class_num_new).T.tolist()
-  class_num_new_2 = [v for v in t1 if sum(v)!=0]
-  t2 = np.array(class_num_new_2).T.tolist()
-
-
-
-  # Set figure size
-  colors = ['magenta','lawngreen','gold','lightblue','lightseagreen','cyan','darkorange','#228B22','grey','#FF4500','#000000']
+  for dd in e_num:
+    class_num = confusion_matrix(hidden_scaled.LITHO.values, hidden_pred_dt).T
+    class_num = np.insert(class_num, dd, np.array([0 for i in range(11)]), axis=1)
+    class_num = np.insert(class_num, dd, np.array([0 for i in range(12)]), axis=0)
+  c_index = le.transform(d)
+  colors = ['tan', 'magenta', 'lawngreen', '#000000', 'gold', 'lightblue', 'lightseagreen', 'cyan', 'darkorange', '#228B22' , 'grey', '#FF4500']
   figure(figsize=(10, 10))
-
   # Plot stacked bar chart
-  for c, v in enumerate(t2):
-    plt.bar(sorted(d_new), t2[c], color=colors[c], label=sorted(d_new)[c])
-
-
-
+  for i in range(12):
+    plt.bar(d, class_num[i], color=colors[i], label=d[i])
   # Define labels
-
   plt.xlabel("actual class")
   plt.ylabel("Percent of predicted class")
-  plt.yticks(np.arange(0, 61, 5))
-
-
+  #plt.yticks(np.arange(0, 61, 5))
   # Add legend
-
   plt.legend(loc=1)
-
   # Display
-
   plt.show()
