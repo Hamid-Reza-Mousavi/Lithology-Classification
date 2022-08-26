@@ -101,7 +101,7 @@ def error_plot(y_true, y_pred, le):
   e_num = le.transform(e)
 
   for dd in e_num:
-    class_num = confusion_matrix(hidden_scaled.LITHO.values, hidden_pred_dt).T
+    class_num = confusion_matrix(y_true, y_pred).T
     class_num = np.insert(class_num, dd, np.array([0 for i in range(11)]), axis=1)
     class_num = np.insert(class_num, dd, np.array([0 for i in range(12)]), axis=0)
   c_index = le.transform(d)
