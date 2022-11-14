@@ -14,22 +14,19 @@ def matrix_score(
 y_true:list,
 y_pred:list
 ):
-    """Returns the penalty matrix score obined by the predicted lithofacies a
-    particular machine-learning model is able to provide. The matrix score was a metric 
-    measure proposed by the FORCE commitee in order to provide the prediction performance
-    measure from a petrophyicist perpective.
+    """Returns the penalty matrix score obined by the predicted lithofacies.
 
     Parameters
     ----------
     y_true: list
-      The actual lithologies given by the datasets provider.
+      The actual lithologies.
     y_pred: list
-      The predicted lithofacies obtained by a particular machine learning model.
+      The predicted lithofacies.
 
     Returns
     ----------
     matrix penaty score:
-      Penalty matrix score obined by a particular machine-learning model.
+      Penalty matrix score.
     """
     
     import numpy as np

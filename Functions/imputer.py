@@ -1,44 +1,14 @@
 
-"""Data imputer (regression | mode,median,constant,... | timeseries)
-
-This script test three diffrent machine learning regressors in order
-to predict the four most relevant wireline logs,DTC, NPHI, DTS, and RHOB.
-Afterwards, the models' results are compared between each other in each
-prediction stage in order to select the best performing model. Later, 
-at each stage the missing instances encountered in the training, open test,
-and hidden test datasets are imputed by the predictions otained by the best
-ML model at each stage. Finally, 6 additional features are included in each
-data subset.
-
-It requires xgboost, lightgbm, catboost to be installed before running, as
-well as pandas and numpy functionalities.
-"""
-
 def regression_imputer(traindata, testdata, hiddendata):
   
-  """Receives the pre-processed data and returns the data with additional
-  columns named as cleaned data. These additional columns include the 
-  predicted, augmented, and 6 additional features icluding impedances 
-  (S_I, P_I), bulk and shear modulus (K, G), slowness ratio (DT_R), and 
-  true and measure depths ratio (MD_TVD).
-
-  Parameters
-  ----------
-  training: Dataframe
-    Pre-processed training dataframe.
-  testdata: Dataframe
-    Pre-processed open test dataframe.
-  hiddendata: Dataframe
-    Pre-processed hidden test dataframe.
-
-  Returns
-  ----------
-  cleaned_traindata: Dataframe
-    Cleaned trainig dataframe.
-  cleaned_testdata: Dataframe
-    Cleaned test dataframe.
-  cleaned_hiddendata: Dataframe
-    Cleaned hidden dataframe.
+  """Imputing missing value  
+  This script test three diffrent machine learning regressors in order
+  to predict the four most relevant wireline logs,DTC, NPHI, DTS, and RHOB.
+  at each stage the missing instances encountered in the training, open test,
+  and hidden test datasets are imputed by the predictions otained by the best
+  ML model at each stage.
+  
+  It requires xgboost, lightgbm, catboost to be installed before running
   """
   import numpy as np
   import pandas as pd
