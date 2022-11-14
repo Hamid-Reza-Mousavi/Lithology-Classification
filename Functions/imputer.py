@@ -52,7 +52,8 @@ def regression_imputer(traindata, testdata, hiddendata):
   # list of regressors to be tests set to be supported by GPUs
   estimators = [XGBRegressor(n_estimators=250,
                              tree_method='gpu_hist',
-                             learning_rate=0.05), 
+                             learning_rate=0.05,
+                             objective ='reg:squarederror',), 
                 
                 CatBoostRegressor(task_type='GPU'),
                 
