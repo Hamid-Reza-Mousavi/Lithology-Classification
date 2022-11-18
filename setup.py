@@ -8,8 +8,8 @@ setup(
         name="Package",
         version="0.0.1",
         url="https://github.com/Esfahani98/Package.git",
-        author="Zoraiz Ali",
-        license="MIT",
+        author="Hamid Reza Mousavi",
+        license="IUST",
         packages=["Functions", "Models"],
         include_package_data=True,
         install_requires=["numpy"]
