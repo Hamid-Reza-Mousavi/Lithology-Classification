@@ -5,9 +5,9 @@
 from setuptools import setup
 
 setup(
-        name="Mousavi",
+        name="Lithofacies-Classification",
         version="0.0.1",
-        url="https://github.com/Esfahani98/Package.git",
+        url="https://github.com/Esfahani98/Lithofacies-Classification-from-Well-Logs.git",
         author="Hamid Reza Mousavi",
         license="IUST",
         packages=["Functions", "Models"],
