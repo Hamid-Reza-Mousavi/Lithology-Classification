@@ -1,6 +1,6 @@
 # Novel Approach for Lithology Prediction from Well-Logging Data Using Machine Learning And Deep Learning Techniques
-Last modified: -
-Data and code related to this work will be shared here.
+
+Code related to this work will be shared here.
 
 Abstract
 
