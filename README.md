@@ -3,7 +3,7 @@
 Notes:
 1. The code is written based on python3. 
 2. It is better than the mentioned packages for proper execution
-  Use it in the requirements file. (use venv and pip install -r requiremnt.txt)
+  Use it in the requirements file. (use venv and pip install -r requirements.txt)
 3. XGBoost.ipyn only contains the XGBoost model
 4. Main.ipyn contains all models.
 5. The Lithofacies_Classification folder contains the models and tools used.
