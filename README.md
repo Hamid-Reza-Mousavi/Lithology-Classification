@@ -6,7 +6,7 @@ Notes:
   Use it in the requirements file. (use venv and pip install -r requirements.txt)
 3. XGBoost.ipyn only contains the XGBoost model
 4. Main.ipyn contains all models.
-5. The Lithofacies_Classification folder contains the models and tools used.
+5. The Lithofacies_Classification folder contains the models and Functions used.
 <p align="center">
   <img width="800" src="https://github.com/Hamid-Reza-Mousavi/Lithology_Classification/blob/main/figs/L1.jpg" />
 </p>
